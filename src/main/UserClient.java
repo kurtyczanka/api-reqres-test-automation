@@ -11,7 +11,6 @@ public final class UserClient extends BaseClient {
         return given().when().get(constructPath(id));
     }
 
-
     private static String constructPath(int id) {
         return "users/" + id;
     }

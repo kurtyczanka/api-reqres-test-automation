@@ -1,5 +1,7 @@
+import io.restassured.response.Response;
 import main.UserClient;
 import main.UserData;
+import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -13,7 +15,7 @@ public class UserTest {
             "2, janet.weaver@reqres.in, Janet, Weaver, https://reqres.in/img/faces/2-image.jpg",
             "12, rachel.howell@reqres.in, Rachel, Howell, https://reqres.in/img/faces/12-image.jpg"
     })
-    public void  testSingleUserDataShouldBeCorrect(
+    void  testSingleUserDataShouldBeCorrect(
             int id, String email, String firstName, String lastName, String avatar) {
         UserData response = UserClient.listSingleUser(id).as(UserData.class);
                 assertAll(
@@ -25,4 +27,11 @@ public class UserTest {
 
     }
 
+    @ParameterizedTest
+    @CsvSource({"0", "13"})
+    void testGettingNonExistentSingleUserShouldReturn404(int id) {
+        Response response = UserClient.listSingleUser(id);
+
+        Assertions.assertEquals(HttpStatus.SC_NOT_FOUND, response.getStatusCode());
+    }
 }
