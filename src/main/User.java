@@ -22,4 +22,12 @@ public final class User {
 
     private String avatar;
 
+    private String name;
+
+    private String job;
+
+    private String updatedAt;
+
+    private String createdAt;
+
 }

@@ -11,6 +11,10 @@ public final class UserClient extends BaseClient {
         return given().when().get(constructPath(id));
     }
 
+    public static Response createSingleUser(User requestBody){
+        return given().body(requestBody).when().post("users");
+    }
+
     private static String constructPath(int id) {
         return "users/" + id;
     }

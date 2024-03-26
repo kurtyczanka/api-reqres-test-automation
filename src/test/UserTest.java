@@ -1,4 +1,5 @@
 import io.restassured.response.Response;
+import main.User;
 import main.UserClient;
 import main.UserData;
 import org.apache.http.HttpStatus;
@@ -33,5 +34,17 @@ public class UserTest {
         Response response = UserClient.listSingleUser(id);
 
         Assertions.assertEquals(HttpStatus.SC_NOT_FOUND, response.getStatusCode());
+    }
+
+    @ParameterizedTest
+    @CsvSource({
+            "morpheus, leader",
+            "zeus, manager"})
+    void testCreatingNewUserDataShouldBeNotNull(String name, String job) {
+        User response = UserClient.createSingleUser(User.builder().name(name).job(job).build()).as(User.class);
+
+        assertAll(
+                () -> response.getId(),
+                () -> Assertions.assertNotNull(response.getCreatedAt()));
     }
 }
