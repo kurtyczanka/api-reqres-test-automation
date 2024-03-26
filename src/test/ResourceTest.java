@@ -1,5 +1,7 @@
+import io.restassured.response.Response;
 import main.ResourceClient;
 import main.ResourceData;
+import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -23,5 +25,14 @@ public class ResourceTest {
                 () -> Assertions.assertEquals(year, response.getData().getYear()),
                 () -> Assertions.assertEquals(color, response.getData().getColor()),
                 () -> Assertions.assertEquals(pantoneValue, response.getData().getPantoneValue()));
+    }
+
+    @ParameterizedTest
+    @CsvSource({"0", "23"})
+    void testGettingNonExistentSingleResourceShouldReturn404(int id) {
+        Response response = ResourceClient.listSingleResource(id);
+        response.then().log().all();
+
+        Assertions.assertEquals(HttpStatus.SC_NOT_FOUND, response.getStatusCode());
     }
 }
