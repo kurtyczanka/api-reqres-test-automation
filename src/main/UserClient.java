@@ -11,8 +11,12 @@ public final class UserClient extends BaseClient {
         return given().spec(requestSpec()).when().get(constructPath(id));
     }
 
-    public static Response createSingleUser(User requestBody){
+    public static Response createSingleUser(User requestBody) {
         return given().spec(requestSpec()).body(requestBody).when().post("users");
+    }
+
+    public static Response updateSingleUserPut(int id, User requestBody) {
+        return given().spec(requestSpec()).body(requestBody).when().put(constructPath(id));
     }
 
     private static String constructPath(int id) {

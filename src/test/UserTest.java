@@ -47,4 +47,13 @@ public class UserTest {
                 () -> response.getId(),
                 () -> Assertions.assertNotNull(response.getCreatedAt()));
     }
+
+    @ParameterizedTest
+    @CsvSource({
+            "2, morpheus, test manager"})
+    void testUpdateUserDataWithPutShouldBeCorrect(int id, String name, String job) {
+        User response = UserClient.updateSingleUserPut(id, User.builder().name(name).job(job).build()).as(User.class);
+
+        Assertions.assertNotNull(response.getUpdatedAt());
+    }
 }
