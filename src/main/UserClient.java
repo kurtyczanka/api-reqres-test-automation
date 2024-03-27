@@ -8,11 +8,11 @@ public final class UserClient extends BaseClient {
     private UserClient() {}
 
     public static Response listSingleUser(int id) {
-        return given().when().get(constructPath(id));
+        return given().spec(requestSpec()).when().get(constructPath(id));
     }
 
     public static Response createSingleUser(User requestBody){
-        return given().body(requestBody).when().post("users");
+        return given().spec(requestSpec()).body(requestBody).when().post("users");
     }
 
     private static String constructPath(int id) {

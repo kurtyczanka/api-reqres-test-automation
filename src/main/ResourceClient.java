@@ -9,7 +9,7 @@ public class ResourceClient extends BaseClient {
     private ResourceClient() {}
 
     public static Response listSingleResource(int id) {
-        return given().when().get(constructPath(id));
+        return given().spec(requestSpec()).when().get(constructPath(id));
     }
 
     private static String constructPath(int id) {
