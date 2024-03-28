@@ -31,7 +31,6 @@ public class ResourceTest {
     @CsvSource({"0", "23"})
     void testGettingNonExistentSingleResourceShouldReturn404(int id) {
         Response response = ResourceClient.listSingleResource(id);
-        response.then().log().all();
 
         Assertions.assertEquals(HttpStatus.SC_NOT_FOUND, response.getStatusCode());
     }

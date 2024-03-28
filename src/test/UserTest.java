@@ -49,8 +49,7 @@ public class UserTest {
     }
 
     @ParameterizedTest
-    @CsvSource({
-            "2, morpheus, test manager"})
+    @CsvSource({"2, morpheus, test manager"})
     void testUpdateUserDataWithPutShouldBeCorrect(int id, String name, String job) {
         User response = UserClient.updateSingleUserPut(id, User.builder().name(name).job(job).build()).as(User.class);
 
